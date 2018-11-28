@@ -1,0 +1,9 @@
+README.txt
+setup.py
+bees/__init__.py
+bees/bees_utils.py
+bees.egg-info/PKG-INFO
+bees.egg-info/SOURCES.txt
+bees.egg-info/dependency_links.txt
+bees.egg-info/requires.txt
+bees.egg-info/top_level.txt

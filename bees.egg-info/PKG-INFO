@@ -1,0 +1,11 @@
+Metadata-Version: 1.0
+Name: bees
+Version: 0.1
+Summary: Bees
+Home-page: https://github.com/bigdata-ort/bees
+Author: Bigdata ORT
+Author-email: yovine@ort.edu.uy
+License: MIT
+Description: Utility package for the bees project.
+        
+Platform: UNKNOWN
