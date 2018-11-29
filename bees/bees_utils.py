@@ -258,13 +258,11 @@ def predict(model, data):
 	pred = np.argmax(model.predict(data), axis = 1) 
 	pred = pred.reshape(-1,1)
 	return pred
-	
-	
+
 def load_test_and_generate_prediction_file(model, class_weights, img_width, img_height, img_channels):
-	
 	X_test_partition, test_images = load_test(img_width, img_height, img_channels)
 	pred = predict(model, test_images)
-	
+	    
 	test_ids = X_test_partition['id']	
 	test_ids = np.array(test_ids).reshape(-1,1)
 
@@ -274,9 +272,6 @@ def load_test_and_generate_prediction_file(model, class_weights, img_width, img_
 	df = pd.DataFrame(output)
 	df.columns = ['id','expected']
     
-    df['expected'] = df['expected'].map(pd.Series(categories[class_name]))    
-
+	df['expected'] = df['expected'].map(pd.Series(categories[class_name]))    
 	df.to_csv("test.csv",index = False,index_label = False)	
-	
-    return df
-		
+	return df
