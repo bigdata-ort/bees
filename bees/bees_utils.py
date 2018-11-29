@@ -274,8 +274,9 @@ def load_test_and_generate_prediction_file(model, class_weights, img_width, img_
 	df = pd.DataFrame(output)
 	df.columns = ['id','expected']
     
-	df['weight'] = df['expected'].map(pd.Series(class_weights))
-    
+    df['expected'] = df['expected'].map(pd.Series(categories[class_name]))    
+
 	df.to_csv("test.csv",index = False,index_label = False)	
-	return df
+	
+    return df
 		
