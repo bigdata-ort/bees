@@ -259,7 +259,7 @@ def predict(model, data):
 	pred = pred.reshape(-1,1)
 	return pred
 
-def load_test_and_generate_prediction_file(model, class_weights, class_name, img_width, img_height, img_channels):
+def load_test_and_generate_prediction_file(model, class_weights, class_name, img_width, img_height, img_channels, fname = 'test.csv'):
 	"""
 	"""
 	X_test_partition, test_images = load_test(img_width, img_height, img_channels)
@@ -275,5 +275,5 @@ def load_test_and_generate_prediction_file(model, class_weights, class_name, img
 	df.columns = ['id','expected']
     
 	df['expected'] = df['expected'].map(pd.Series(categories[class_name]))    
-	df.to_csv("test.csv",index = False,index_label = False)	
+	df.to_csv(fname, index = False, index_label = False)	
 	return df
