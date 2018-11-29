@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='bees',
-    version='0.7',
+    version='0.1',
     packages=find_packages(exclude=[]),
     license='MIT',
     description='Bees',
