@@ -147,14 +147,6 @@ def load_images_and_target(train_bees, val_bees, test_bees, y_field_name, img_wi
 
     return (train_X, val_X, test_X, train_y, val_y, test_y)	
 
-
-def class_weights(df, class_name) :
-    # Hint: usar
-    # http://scikit-learn.org/stable/modules/generated/sklearn.utils.class_weight.compute_class_weight.html
-    y = df[class_name]
-    return sklearn.utils.class_weight.compute_class_weight('balanced', categories[class_name], y) 
-    # np.ones(categories[class_name].shape[0])
-
 def train(model,
                 train_X,
                 train_y, 
