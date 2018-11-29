@@ -30,7 +30,7 @@ import skimage
 import skimage.io
 import skimage.transform
 
-img_folder='./data/imgs/'
+data_folder = '.'
 
 # One hot encoding
 
@@ -59,10 +59,10 @@ def onehot_encoding(df, class_name) :
     return enc.transform(class_columns(df)).toarray()[:,class_indices[class_name]]
 
 def read_data() :
-    bees=pd.read_csv('./data/bees_train.csv', 
+    bees=pd.read_csv(data_folder + '/data/bees_train.csv', 
                 index_col=False,
                 dtype={'subspecies':'category', 'health':'category','caste':'category'})
-    bees_test_for_evaluation=pd.read_csv('./data/bees_test.csv', 
+    bees_test_for_evaluation=pd.read_csv(data_folder + '/data/bees_test.csv', 
                 index_col=False,  
                 dtype={'caste':'category'})
     
@@ -70,11 +70,14 @@ def read_data() :
  
     return bees, bees_test_for_evaluation
 
-def read_img(file, img_folder, img_width, img_height, img_channels):
+def read_img(file, img_width, img_height, img_channels):
     """
     Read and resize img, adjust channels. 
     @param file: file name without full path
     """
+
+    img_folder = data_folder + '/data/imgs/'
+
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         img = skimage.io.imread(img_folder + file)
@@ -88,7 +91,7 @@ def plot_images(data, attribute, samples) :
     _, ax = plt.subplots(nrows = 1, ncols = len(samples), figsize = (20, 5))
     for i, img_idx in enumerate(samples) :
         attrname = data[attribute].iloc[img_idx]
-        filename = './data/imgs/' + data['file'].iloc[img_idx]
+        filename = data_folder + '/data/imgs/' + data['file'].iloc[img_idx]
         img = imageio.imread(filename)
         ax[i].imshow(img)
         ax[i].set_title(filename + ' : ' + attrname, fontsize = 12)
@@ -128,17 +131,17 @@ def load_images_and_target(train_bees, val_bees, test_bees, y_field_name, img_wi
     # Use np.stack to get NumPy array for CNN input
     
     # Train data
-    train_X = np.stack(train_bees['file'].apply(lambda x: read_img(x, img_folder, img_width, img_height, img_channels)))
+    train_X = np.stack(train_bees['file'].apply(lambda x: read_img(x, img_width, img_height, img_channels)))
     train_y = pd.DataFrame(onehot_encoding(train_bees, y_field_name))
     # train_y  = pd.get_dummies(train_bees[y_field_name], drop_first=False)
 
     # Validation during training data to calc val_loss metric
-    val_X = np.stack(val_bees['file'].apply(lambda x: read_img(x, img_folder, img_width, img_height, img_channels)))
+    val_X = np.stack(val_bees['file'].apply(lambda x: read_img(x, img_width, img_height, img_channels)))
     val_y = pd.DataFrame(onehot_encoding(val_bees, y_field_name))
     # val_y = pd.get_dummies(val_bees[y_field_name], drop_first=False)
 
     # Test data
-    test_X = np.stack(test_bees['file'].apply(lambda x: read_img(x, img_folder, img_width, img_height, img_channels)))
+    test_X = np.stack(test_bees['file'].apply(lambda x: read_img(x, img_width, img_height, img_channels)))
     test_y = pd.DataFrame(onehot_encoding(test_bees, y_field_name))
     # test_y = pd.get_dummies(test_bees[y_field_name], drop_first=False)
 
@@ -251,11 +254,11 @@ def eval_model(training, model, test_X, test_y, field_name):
 	
 	
 def load_test(img_width, img_height, img_channels):
-	X_test_partition=pd.read_csv('./data/bees_test.csv', 
+	X_test_partition=pd.read_csv(data_folder + '/data/bees_test.csv', 
 					index_col=False,  
 					dtype={'caste':'category'})
 		
-	test_images = np.stack(X_test_partition['file'].apply(lambda x: read_img(x, img_folder, img_width, img_height, img_channels)))
+	test_images = np.stack(X_test_partition['file'].apply(lambda x: read_img(x, img_width, img_height, img_channels)))
 	
 	return X_test_partition, test_images
 
