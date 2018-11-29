@@ -259,7 +259,9 @@ def predict(model, data):
 	pred = pred.reshape(-1,1)
 	return pred
 
-def load_test_and_generate_prediction_file(model, class_weights, img_width, img_height, img_channels):
+def load_test_and_generate_prediction_file(model, class_weights, class_name, img_width, img_height, img_channels):
+	"""
+	"""
 	X_test_partition, test_images = load_test(img_width, img_height, img_channels)
 	pred = predict(model, test_images)
 	    
